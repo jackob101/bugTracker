@@ -6,6 +6,7 @@ import com.trix.bugtracker.services.interfaces.ProjectService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,11 @@ public class ProjectServiceImpl implements ProjectService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Project> findAll() {
+        return projectRepository.findAll();
     }
 
 

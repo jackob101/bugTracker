@@ -2,7 +2,6 @@ package com.trix.bugtracker.services.interfaces;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface CRUDService<T> {
 
@@ -16,6 +15,6 @@ public interface CRUDService<T> {
 
    boolean delete(Long id);
 
-
+   Collection<T> findAll();
 
 }

@@ -6,6 +6,7 @@ import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -58,6 +59,11 @@ public class IssueServiceImpl implements IssueService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Issue> findAll() {
+        return issueRepository.findAll();
     }
 
 }
