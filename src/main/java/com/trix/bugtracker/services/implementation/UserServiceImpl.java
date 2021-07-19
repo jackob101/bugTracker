@@ -5,7 +5,6 @@ import com.trix.bugtracker.repository.UserRepository;
 import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

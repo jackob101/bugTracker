@@ -94,7 +94,7 @@ class IssueRepositoryTest {
                 .build();
 
         Issue issue3 = Issue.builder()
-                .priority(Priority.NOT_IMPORANT)
+                .priority(Priority.NOT_IMPORTANT)
                 .openedTime(LocalDateTime.now())
                 .description("Description number 3")
                 .users(Arrays.asList(user1, user3))

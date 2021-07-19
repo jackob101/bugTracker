@@ -1,16 +1,15 @@
 package com.trix.bugtracker.model;
 
 import com.trix.bugtracker.model.enums.Priority;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-
+@ToString
 @Builder
 @AllArgsConstructor
 @Data
@@ -24,7 +23,9 @@ public class Issue {
     private String description;
     private LocalDateTime openedTime;
     private LocalDateTime closedTime;
-    @Enumerated(EnumType.STRING)
+
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
     private Priority priority;
 
     @ManyToMany
@@ -35,6 +36,8 @@ public class Issue {
     )
     private List<User> users;
 
+
+    @NotNull
     @ManyToOne
     private Project project;
 
@@ -43,5 +46,9 @@ public class Issue {
         this.openedTime = LocalDateTime.now();
         this.closedTime = null;
         this.priority = Priority.IMPORTANT;
+        this.users = new ArrayList<>();
     }
+
+
+
 }

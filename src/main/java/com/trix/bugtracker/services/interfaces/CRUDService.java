@@ -15,6 +15,6 @@ public interface CRUDService<T> {
 
    boolean delete(Long id);
 
-   Collection<T> findAll();
+   List<T> findAll();
 
 }
