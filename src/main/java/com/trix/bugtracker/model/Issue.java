@@ -24,7 +24,6 @@ public class Issue {
     private LocalDateTime openedTime;
     private LocalDateTime closedTime;
 
-    @NotNull
     @Enumerated(EnumType.ORDINAL)
     private Priority priority;
 
@@ -37,7 +36,6 @@ public class Issue {
     private List<User> users;
 
 
-    @NotNull
     @ManyToOne
     private Project project;
 
