@@ -1,4 +1,4 @@
-package com.trix.bugtracker.frontend.security;
+package com.trix.bugtracker.security;
 
 
 import org.springframework.security.oauth2.core.OAuth2Error;
