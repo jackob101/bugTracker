@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,7 +40,7 @@ public class UserController {
 
 
     @PostMapping(path = "new")
-    public User createIssue(@RequestBody User user, HttpServletResponse httpResponse){
+    public User createIssue(@RequestBody @Valid User user, HttpServletResponse httpResponse){
 
         User saved = userService.save(user);
 

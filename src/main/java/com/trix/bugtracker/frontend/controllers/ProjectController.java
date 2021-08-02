@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(path = "project", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,7 +43,7 @@ public class ProjectController {
 
 
     @PostMapping(path = "new")
-    public Project createIssue(@RequestBody Project project, HttpServletResponse httpResponse){
+    public Project createIssue(@RequestBody @Valid Project project, HttpServletResponse httpResponse){
 
         Project saved = projectService.save(project);
 

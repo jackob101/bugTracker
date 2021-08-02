@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,14 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 0, max = 200, message = "Description must be between 0 - 200 chars")
+    @NotNull(message = "Description cannot be empty")
     private String description;
+
     private LocalDateTime openedTime;
+
     private LocalDateTime closedTime;
+
 
     @Enumerated(EnumType.ORDINAL)
     private Priority priority;
@@ -36,6 +42,7 @@ public class Issue {
     private List<User> users;
 
 
+    @NotNull
     @ManyToOne
     private Project project;
 

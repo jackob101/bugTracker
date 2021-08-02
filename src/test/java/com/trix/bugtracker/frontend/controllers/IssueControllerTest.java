@@ -2,6 +2,7 @@ package com.trix.bugtracker.frontend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trix.bugtracker.model.Issue;
+import com.trix.bugtracker.model.Project;
 import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.BufferedReader;
@@ -48,10 +50,14 @@ class IssueControllerTest {
 
     @BeforeEach
     void setUp() {
+
+        Project project = new Project();
+
         issue = Issue.builder()
                 .id(1L)
                 .priority(Priority.IMPORTANT)
                 .description("Test description")
+                .project(project)
                 .build();
     }
 
@@ -100,7 +106,7 @@ class IssueControllerTest {
     }
 
     @Test
-    void createAccount() throws Exception {
+    void createIssue() throws Exception {
         //given
         String json = new ObjectMapper().writeValueAsString(issue);
 

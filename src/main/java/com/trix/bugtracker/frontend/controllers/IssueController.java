@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(path = "issue", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,7 +40,7 @@ public class IssueController {
 
 
     @PostMapping(path = "new")
-    public Issue createIssue(@RequestBody Issue issue, HttpServletResponse httpResponse){
+    public Issue createIssue(@RequestBody @Valid Issue issue, HttpServletResponse httpResponse){
 
         Issue saved = issueService.save(issue);
 
