@@ -26,6 +26,9 @@ public class Project {
     @NotNull(message = "Name cannot be empty")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToMany
     @JoinTable(
             name = "Project_User",
@@ -36,4 +39,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Issue> issues = new ArrayList<>();
+
+
+
 }

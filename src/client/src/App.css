@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.lightdark {
+  background: #3c3837;
+}
+
+.height-full {
+  height: 100vh;
+}
+
+.width-80 {
+  width: 80% !important;
+}

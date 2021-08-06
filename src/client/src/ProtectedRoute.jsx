@@ -1,6 +1,6 @@
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import React, { Component } from "react";
-import { isAuthenticated } from "./repository";
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 class ProtectedRoute extends Component {
   state = {};
@@ -8,19 +8,8 @@ class ProtectedRoute extends Component {
   render() {
     return (
       <Route
-        {...this.props.rest}
-        render={({ location }) =>
-          isAuthenticated() ? (
-            this.props.children
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location },
-              }}
-            />
-          )
-        }
+        component={withAuthenticationRequired(this.props.component)}
+        {...this.props.args}
       />
     );
   }
