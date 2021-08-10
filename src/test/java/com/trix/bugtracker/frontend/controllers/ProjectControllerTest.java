@@ -1,7 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trix.bugtracker.model.Project;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

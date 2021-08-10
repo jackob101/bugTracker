@@ -1,6 +1,6 @@
 package com.trix.bugtracker.services.implementation;
 
-import com.trix.bugtracker.model.User;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

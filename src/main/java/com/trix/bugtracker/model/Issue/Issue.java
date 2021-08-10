@@ -1,7 +1,12 @@
-package com.trix.bugtracker.model;
+package com.trix.bugtracker.model.Issue;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trix.bugtracker.model.Project.Project;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.model.enums.Priority;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
+@JsonSerialize(using = IssueSerializer.class)
 @Builder
 @AllArgsConstructor
 @Data
@@ -20,6 +25,9 @@ public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
+    private String title;
 
     @Size(min = 0, max = 200, message = "Description must be between 0 - 200 chars")
     @NotNull(message = "Description cannot be empty")
@@ -33,11 +41,15 @@ public class Issue {
     @Enumerated(EnumType.ORDINAL)
     private Priority priority;
 
+    @NotNull
+    @ManyToOne
+    private User createdBy;
+
     @ManyToMany
     @JoinTable(
             name = "Issue_User",
-            joinColumns = { @JoinColumn(name = "issue_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+            joinColumns = {@JoinColumn(name = "issue_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> users;
 
@@ -48,12 +60,22 @@ public class Issue {
 
     public Issue() {
         this.description = "";
+        this.title = "";
         this.openedTime = LocalDateTime.now();
         this.closedTime = null;
         this.priority = Priority.IMPORTANT;
         this.users = new ArrayList<>();
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", openedTime=" + openedTime +
+                ", closedTime=" + closedTime +
+                ", priority=" + priority +
+                '}';
+    }
 }

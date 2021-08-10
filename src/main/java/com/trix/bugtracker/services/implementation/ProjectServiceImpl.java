@@ -1,6 +1,6 @@
 package com.trix.bugtracker.services.implementation;
 
-import com.trix.bugtracker.model.Project;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.repository.ProjectRepository;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import org.springframework.stereotype.Service;

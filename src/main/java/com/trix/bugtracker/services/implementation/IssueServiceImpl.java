@@ -1,7 +1,7 @@
 package com.trix.bugtracker.services.implementation;
 
 
-import com.trix.bugtracker.model.Issue;
+import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import org.springframework.stereotype.Service;
@@ -65,4 +65,14 @@ public class IssueServiceImpl implements IssueService {
         return issueRepository.findAll();
     }
 
+    @Override
+    public List<Issue> findIssuesByProjectId(Long id) {
+        return issueRepository.findByProjectId(id);
+    }
+
+    @Override
+    public Issue update(Issue issue, Long issueId) {
+        issue.setId(issueId);
+        return save(issue);
+    }
 }

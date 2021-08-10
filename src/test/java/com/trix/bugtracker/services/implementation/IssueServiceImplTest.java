@@ -1,6 +1,7 @@
 package com.trix.bugtracker.services.implementation;
 
-import com.trix.bugtracker.model.Issue;
+import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.repository.IssueRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -190,7 +191,47 @@ class IssueServiceImplTest {
         //given
         //when
         //then
-        assertFalse(issueService.delete((Long)null));
+        assertFalse(issueService.delete((Long) null));
     }
 
+    @Test
+    void findByProjectId() {
+        //given
+        Long projectId = 1L;
+        Project project = Project.builder()
+                .name("Test project 1")
+                .description("Test desc")
+                .id(projectId)
+                .build();
+
+        List<Issue> issues = Arrays.asList(Issue.builder()
+                .id(1L)
+                .description("Test desc 1")
+                .priority(Priority.IMPORTANT)
+                .project(project)
+                .build(), Issue.builder()
+                .id(2L)
+                .description("Test desc 2")
+                .priority(Priority.IMPORTANT)
+                .project(project)
+                .build(), Issue.builder()
+                .id(3L)
+                .description("Test desc 3")
+                .priority(Priority.IMPORTANT)
+                .project(project)
+                .build(), Issue.builder()
+                .id(4L)
+                .description("Test desc 4")
+                .priority(Priority.IMPORTANT)
+                .project(project)
+                .build());
+
+        project.setIssues(issues);
+
+        //when
+        when(issueRepository.findByProjectId(anyLong())).thenReturn(issues);
+
+        //then
+        assertEquals(issues.size(), issueService.findIssuesByProjectId(1L).size());
+    }
 }

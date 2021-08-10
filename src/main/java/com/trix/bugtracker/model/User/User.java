@@ -1,5 +1,8 @@
-package com.trix.bugtracker.model;
+package com.trix.bugtracker.model.User;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.Project.Project;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@JsonSerialize(using = UserSerializer.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,4 +50,17 @@ public class User {
     @ManyToMany(mappedBy = "assignedUsers")
     private List<Project> projects;
 
+    @OneToMany(mappedBy = "createdBy")
+    private List<Issue> submittedIssues;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

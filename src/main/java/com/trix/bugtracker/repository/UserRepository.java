@@ -1,6 +1,6 @@
 package com.trix.bugtracker.repository;
 
-import com.trix.bugtracker.model.User;
+import com.trix.bugtracker.model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.trix.bugtracker.services.implementation;
 
-import com.trix.bugtracker.model.Project;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.repository.ProjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

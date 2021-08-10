@@ -1,7 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
 import com.trix.bugtracker.frontend.exceptions.UserNotFoundException;
-import com.trix.bugtracker.model.User;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.trix.bugtracker.services.implementation;
 
-import com.trix.bugtracker.model.User;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.repository.UserRepository;
 import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.stereotype.Service;

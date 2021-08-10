@@ -1,9 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
-import com.trix.bugtracker.frontend.exceptions.IssueNotFoundException;
 import com.trix.bugtracker.frontend.exceptions.ProjectNotFoundException;
-import com.trix.bugtracker.model.Issue;
-import com.trix.bugtracker.model.Project;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

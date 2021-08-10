@@ -1,8 +1,8 @@
 package com.trix.bugtracker.repository;
 
-import com.trix.bugtracker.model.Issue;
-import com.trix.bugtracker.model.Project;
-import com.trix.bugtracker.model.User;
+import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.Project.Project;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.model.enums.Priority;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
