@@ -6,7 +6,6 @@ import com.trix.bugtracker.model.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import java.util.List;
 @JsonSerialize(using = ProjectSerializer.class)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
 public class Project {
@@ -39,12 +37,16 @@ public class Project {
             joinColumns = {@JoinColumn(name = "project_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private List<User> assignedUsers = new ArrayList<>();
+    private List<User> assignedUsers;
 
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Issue> issues = new ArrayList<>();
+    private List<Issue> issues;
 
+    public Project() {
+        assignedUsers = new ArrayList<>();
+        issues = new ArrayList<>();
+    }
 
     @Override
     public String toString() {

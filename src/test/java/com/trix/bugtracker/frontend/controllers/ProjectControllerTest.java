@@ -1,6 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trix.bugtracker.DTO.ProjectDTO;
 import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,7 @@ class ProjectControllerTest {
         project = Project.builder()
                 .name("Project 1")
                 .id(1L)
+                .description("desc")
                 .build();
     }
 
@@ -89,18 +91,22 @@ class ProjectControllerTest {
     }
 
     @Test
-    void createAccount() throws Exception {
+    void createProject() throws Exception {
         //given
-        String json = new ObjectMapper().writeValueAsString(project);
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setDescription("New description");
+        projectDTO.setName("new Name");
+
+        String json = new ObjectMapper().writeValueAsString(projectDTO);
 
         //when
         when(projectService.save(Mockito.any(Project.class))).thenReturn(project);
 
         //then
         mockMvc.perform(post(path + "/new")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

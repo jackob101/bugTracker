@@ -1,14 +1,20 @@
 package com.trix.bugtracker.services.implementation;
 
+import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.repository.IssueRepository;
+import com.trix.bugtracker.services.interfaces.ProjectService;
+import com.trix.bugtracker.services.interfaces.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -17,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +33,12 @@ class IssueServiceImplTest {
 
     @Mock
     IssueRepository issueRepository;
+
+    @Mock
+    UserService userService;
+
+    @Mock
+    ProjectService projectService;
 
     @InjectMocks
     IssueServiceImpl issueService;
@@ -37,6 +50,7 @@ class IssueServiceImplTest {
     void setUp() {
         issue = Issue.builder()
                 .id(1L)
+                .title("title")
                 .openedTime(LocalDateTime.now())
                 .description("Random description")
                 .priority(Priority.IMPORTANT)
@@ -158,8 +172,8 @@ class IssueServiceImplTest {
         //when
 
         //then
-        assertThrows(IllegalArgumentException.class,() -> issueService.saveAll(issues));
-        assertThrows(IllegalArgumentException.class,() -> issueService.saveAll(null));
+        assertThrows(IllegalArgumentException.class, () -> issueService.saveAll(issues));
+        assertThrows(IllegalArgumentException.class, () -> issueService.saveAll(null));
     }
 
     @Test
@@ -183,7 +197,7 @@ class IssueServiceImplTest {
         //given
         //when
         //then
-        assertFalse(issueService.delete((Issue)null));
+        assertFalse(issueService.delete((Issue) null));
     }
 
     @Test
@@ -233,5 +247,34 @@ class IssueServiceImplTest {
 
         //then
         assertEquals(issues.size(), issueService.findIssuesByProjectId(1L).size());
+    }
+
+    @Test
+    void update() {
+        //given
+        List<User> users = List.of(
+                new User(1L, "UserName1", "UserLastName1", "Email1@gmail.com", 21),
+                new User(2L, "UserName2", "UserLastName2", "Email2@gmail.com", 22),
+                new User(3L, "UserName3", "UserLastName3", "Email3@gmail.com", 23),
+                new User(4L, "UserName4", "UserLastName4", "Email4@gmail.com", 24),
+                new User(5L, "UserName5", "UserLastName5", "Email5@gmail.com", 25)
+        );
+
+        IssueDTO issueDTO = new IssueDTO(1L, "Example issue", "Example description", false, null, List.of(1L, 2L, 3L, 4L, 5L));
+
+
+        //when
+        when(userService.findAllByIds(anyList())).thenReturn(users);
+        when(issueRepository.findById(anyLong())).thenReturn(Optional.ofNullable(issue));
+        when(issueRepository.save(Mockito.any(Issue.class))).then(AdditionalAnswers.returnsFirstArg());
+
+        Issue update = issueService.update(issueDTO);
+
+        //then
+        assertEquals(issueDTO.getTitle(), update.getTitle());
+        assertEquals(issueDTO.getDescription(), update.getDescription());
+        assertNull(update.getClosedTime());
+        assertEquals(Priority.IMPORTANT, update.getPriority());
+        assertEquals(users.size(), update.getUsers().size());
     }
 }

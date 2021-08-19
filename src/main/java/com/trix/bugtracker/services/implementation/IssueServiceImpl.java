@@ -1,20 +1,29 @@
 package com.trix.bugtracker.services.implementation;
 
 
+import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.IssueService;
+import com.trix.bugtracker.services.interfaces.ProjectService;
+import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class IssueServiceImpl implements IssueService {
 
     private final IssueRepository issueRepository;
+    private final UserService userService;
+    private final ProjectService projectService;
 
-    public IssueServiceImpl(IssueRepository issueRepository) {
+    public IssueServiceImpl(IssueRepository issueRepository, UserService userService, ProjectService projectService) {
         this.issueRepository = issueRepository;
+        this.userService = userService;
+        this.projectService = projectService;
     }
 
     @Override
@@ -44,7 +53,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public boolean delete(Issue entity) {
-        if(entity!=null){
+        if (entity != null) {
             issueRepository.delete(entity);
             return true;
         }
@@ -53,7 +62,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public boolean delete(Long id) {
-        if(id!=null){
+        if (id != null) {
             issueRepository.deleteById(id);
             return true;
         }
@@ -71,8 +80,37 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue update(Issue issue, Long issueId) {
-        issue.setId(issueId);
+    public Issue update(IssueDTO issue) {
+
+        Issue byId = findById(issue.getId());
+
+        if (issue.getTitle() != null) {
+            byId.setTitle(issue.getTitle());
+        }
+        if (issue.getDescription() != null) {
+            byId.setDescription(issue.getDescription());
+        }
+        if (issue.isClosed()) {
+            byId.setClosedTime(LocalDateTime.now());
+        }
+        if (issue.getAssignedUsersId() != null) {
+            List<User> allUsersById = userService.findAllByIds(issue.getAssignedUsersId());
+            byId.setUsers(allUsersById);
+        }
+        if (issue.getPriority() != null) {
+            byId.setPriority(issue.getPriority());
+        }
+        return save(byId);
+    }
+
+    @Override
+    public Issue switchIssueClosedStatus(Long id) {
+        Issue issue = findById(id);
+        if (issue.getClosedTime() != null) {
+            issue.setClosedTime(null);
+        } else {
+            issue.setClosedTime(LocalDateTime.now());
+        }
         return save(issue);
     }
 }

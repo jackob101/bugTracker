@@ -1,8 +1,12 @@
 package com.trix.bugtracker.frontend.controllers;
 
-import com.trix.bugtracker.IssuePojo;
+import com.trix.bugtracker.DTO.IssueDTO;
+import com.trix.bugtracker.DTO.IssuePojo;
+import com.trix.bugtracker.DTO.ProjectIssues;
+import com.trix.bugtracker.converters.ProjectConverter;
 import com.trix.bugtracker.frontend.exceptions.IssueNotFoundException;
 import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import com.trix.bugtracker.services.interfaces.UserService;
@@ -12,6 +16,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(path = "issue", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,14 +53,17 @@ public class IssueController {
     }
 
     @GetMapping(path = "project")
-    public List<Issue> findByProjectId(@RequestParam("id") Long id) {
-        return issueService.findIssuesByProjectId(id);
+    public ProjectIssues findByProjectId(@RequestParam("id") Long id) {
+
+        Project byId = projectService.findById(id);
+        return ProjectConverter.toProjectIssues(byId);
+
     }
 
-    @PutMapping(path = "update")
-    public Issue updateIssue(@RequestParam("id") Long issueId, @RequestBody Issue issue) {
+    @PostMapping(path = "update")
+    public Issue updateIssue(@RequestBody @Valid IssueDTO issueDto) {
 
-        return issueService.update(issue, issueId);
+        return issueService.update(issueDto);
     }
 
     @PostMapping(path = "new")
@@ -75,6 +83,16 @@ public class IssueController {
             httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 
         return saved;
+    }
+
+    @DeleteMapping(path = "delete")
+    public Boolean deleteIssue(@RequestParam("id") Long id) {
+        return issueService.delete(id);
+    }
+
+    @PostMapping(path = "close")
+    public Issue closeIssue(@RequestParam("id") Long id) {
+        return issueService.switchIssueClosedStatus(id);
     }
 
 

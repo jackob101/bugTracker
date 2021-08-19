@@ -53,6 +53,14 @@ public class User {
     @OneToMany(mappedBy = "createdBy")
     private List<Issue> submittedIssues;
 
+    public User(Long id, String name, String lastName, String email, int age) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "User{" +

@@ -1,4 +1,4 @@
-package com.trix.bugtracker;
+package com.trix.bugtracker.DTO;
 
 
 import com.trix.bugtracker.model.Issue.Issue;

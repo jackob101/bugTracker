@@ -24,8 +24,16 @@ public class ProjectSerializer extends StdSerializer<Project> {
         gen.writeNumberField("id", value.getId());
         gen.writeStringField("name", value.getName());
         gen.writeStringField("description", value.getDescription());
-        gen.writeNumberField("assignedUsers", value.getAssignedUsers().size());
-        gen.writeNumberField("issues", value.getIssues().size());
+        if (value.getAssignedUsers() != null) {
+            gen.writeNumberField("assignedUsers", value.getAssignedUsers().size());
+        } else {
+            gen.writeNumberField("assignedUsers", 0);
+        }
+        if (value.getIssues() != null) {
+            gen.writeNumberField("issues", value.getIssues().size());
+        } else {
+            gen.writeNumberField("issues", 0);
+        }
 
         gen.writeEndObject();
     }

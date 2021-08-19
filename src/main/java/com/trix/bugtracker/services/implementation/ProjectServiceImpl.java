@@ -3,6 +3,7 @@ package com.trix.bugtracker.services.implementation;
 import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.repository.ProjectRepository;
 import com.trix.bugtracker.services.interfaces.ProjectService;
+import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +14,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    private final UserService userService;
+
+    public ProjectServiceImpl(ProjectRepository projectRepository, UserService userService) {
         this.projectRepository = projectRepository;
+        this.userService = userService;
     }
 
     @Override
     public Project findById(Long id) {
-        if (id!=null){
+        if (id != null) {
             Optional<Project> byId = projectRepository.findById(id);
             return byId.orElse(null);
         }

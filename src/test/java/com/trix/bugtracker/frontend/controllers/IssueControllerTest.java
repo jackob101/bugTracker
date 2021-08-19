@@ -1,10 +1,13 @@
 package com.trix.bugtracker.frontend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trix.bugtracker.DTO.IssuePojo;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.services.interfaces.IssueService;
+import com.trix.bugtracker.services.interfaces.ProjectService;
+import com.trix.bugtracker.services.interfaces.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.Validator;
 
 import java.util.Collections;
 
@@ -31,6 +35,13 @@ class IssueControllerTest {
     @MockBean
     IssueService issueService;
 
+    @MockBean
+    ProjectService projectService;
+    @MockBean
+    UserService usersService;
+    @MockBean
+    Validator validator;
+
     @Autowired
     MockMvc mockMvc;
 
@@ -42,7 +53,7 @@ class IssueControllerTest {
     @BeforeEach
     void setUp() {
 
-        Project project = new Project();
+        Project project = Project.builder().id(1L).name("Test").build();
 
         issue = Issue.builder()
                 .id(1L)
@@ -99,16 +110,17 @@ class IssueControllerTest {
     @Test
     void createIssue() throws Exception {
         //given
-        String json = new ObjectMapper().writeValueAsString(issue);
+        IssuePojo issuePojo = new IssuePojo(issue);
+        String json = new ObjectMapper().writeValueAsString(issuePojo);
 
         //when
         when(issueService.save(Mockito.any(Issue.class))).thenReturn(issue);
 
         //then
         mockMvc.perform(post(path + "/new")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
-                .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -24,12 +24,16 @@ public class IssueSerializer extends StdSerializer<Issue> {
         gen.writeNumberField("id", value.getId());
         gen.writeStringField("title", value.getTitle());
         gen.writeStringField("description", value.getDescription());
-        gen.writeStringField("openedTime", value.getOpenedTime() + "");
+        gen.writeStringField("createdDate", (value.getOpenedTime() + "").split("T")[0]);
         gen.writeStringField("closedTime", value.getClosedTime() + "");
         gen.writeStringField("priority", value.getPriority().toString());
 
         if (value.getCreatedBy() != null) {
-            gen.writeNumberField("createdById", value.getCreatedBy().getId());
+            gen.writeObjectFieldStart("createdBy");
+            gen.writeNumberField("id", value.getCreatedBy().getId());
+            gen.writeStringField("name", value.getCreatedBy().getName());
+            gen.writeStringField("lastName", value.getCreatedBy().getLastName());
+            gen.writeEndObject();
         } else {
             gen.writeStringField("createById", "null");
         }
@@ -51,8 +55,10 @@ public class IssueSerializer extends StdSerializer<Issue> {
         }
 
         if (value.getProject() != null) {
-            gen.writeStringField("projectName", value.getProject().getName());
-            gen.writeNumberField("projectId", value.getProject().getId());
+            gen.writeObjectFieldStart("project");
+            gen.writeStringField("name", value.getProject().getName());
+            gen.writeNumberField("id", value.getProject().getId());
+            gen.writeEndObject();
         }
 
         gen.writeEndObject();

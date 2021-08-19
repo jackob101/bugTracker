@@ -1,5 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
+import com.trix.bugtracker.DTO.ProjectDTO;
+import com.trix.bugtracker.converters.ProjectConverter;
 import com.trix.bugtracker.frontend.exceptions.ProjectNotFoundException;
 import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.ProjectService;
@@ -41,11 +43,11 @@ public class ProjectController {
 
 
     @PostMapping(path = "new")
-    public Project createIssue(@RequestBody @Valid Project project, HttpServletResponse httpResponse){
+    public Project createIssue(@RequestBody @Valid ProjectDTO project, HttpServletResponse httpResponse) {
 
-        Project saved = projectService.save(project);
+        Project saved = projectService.save(ProjectConverter.toModel(project));
 
-        if(saved!=null)
+        if (saved != null)
             httpResponse.setStatus(HttpServletResponse.SC_CREATED);
 
         return saved;

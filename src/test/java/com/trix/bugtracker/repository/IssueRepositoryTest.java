@@ -84,6 +84,7 @@ class IssueRepositoryTest {
                 .description("Description number 1")
                 .users(Arrays.asList(user1, user2))
                 .closedTime(LocalDateTime.now())
+                .createdBy(users.get(1))
                 .build();
 
         Issue issue2 = Issue.builder()
@@ -91,6 +92,7 @@ class IssueRepositoryTest {
                 .openedTime(LocalDateTime.now())
                 .description("Description number 2")
                 .users(Collections.singletonList(user1))
+                .createdBy(users.get(1))
                 .project(project)
                 .build();
 
@@ -99,6 +101,7 @@ class IssueRepositoryTest {
                 .openedTime(LocalDateTime.now())
                 .description("Description number 3")
                 .users(Arrays.asList(user1, user3))
+                .createdBy(users.get(1))
                 .project(project2)
                 .build();
 
@@ -108,6 +111,7 @@ class IssueRepositoryTest {
                 .description("Description number 4")
                 .users(Arrays.asList(user1, user2, user3))
                 .closedTime(LocalDateTime.now())
+                .createdBy(users.get(1))
                 .project(project)
                 .build();
 
@@ -138,7 +142,7 @@ class IssueRepositoryTest {
         List<Issue> issues = issueRepository.findByProjectId(project.getId());
 
         //then
-        assertEquals(2,issues.size());
+        assertEquals(2, issues.size());
     }
 
     @Test
