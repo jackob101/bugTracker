@@ -16,4 +16,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     List<Issue> findOpenedByProjectId(Long id);
 
     List<Issue> findByProjectId(Long id);
+
+
 }

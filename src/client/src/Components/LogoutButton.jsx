@@ -6,7 +6,10 @@ const LogoutButton = () => {
   return (
     <button
       className="btn btn-secondary"
-      onClick={() => logout({ returnTo: window.location.origin })}
+      onClick={() => {
+        localStorage.clear();
+        logout({ returnTo: window.location.origin });
+      }}
     >
       Log out
     </button>

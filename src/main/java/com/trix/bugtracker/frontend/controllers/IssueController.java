@@ -95,5 +95,15 @@ public class IssueController {
         return issueService.switchIssueClosedStatus(id);
     }
 
+    @PostMapping(path = "assign")
+    public Issue assignUserToIssue(@RequestParam("issueId") Long issueId, @RequestParam("userId") Long userId) {
+        return issueService.assignUser(issueId, userId);
+    }
+
+    @PostMapping(path = "unassign")
+    public Issue unAssignUser(@RequestParam("issueId") Long issueId, @RequestParam("userId") Long userId) {
+        return issueService.unAssignUser(issueId, userId);
+    }
+
 
 }

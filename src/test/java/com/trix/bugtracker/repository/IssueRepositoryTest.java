@@ -155,4 +155,6 @@ class IssueRepositoryTest {
         //then
         assertEquals(1, openedIssues.size());
     }
+
+
 }

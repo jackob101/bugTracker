@@ -1,5 +1,6 @@
 package com.trix.bugtracker.services.implementation;
 
+import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,8 @@ class UserServiceImplTest {
 
     User user;
 
+    List<User> users;
+
     @BeforeEach
     void setUp() {
         user = User.builder()
@@ -37,6 +41,35 @@ class UserServiceImplTest {
                 .age(54)
                 .email("Tom@gmail.com")
                 .build();
+
+        users = List.of(User.builder()
+                        .id(1L)
+                        .name("Tomas")
+                        .lastName("Samot")
+                        .age(54)
+                        .email("Tom@gmail.com")
+                        .issues(new ArrayList<>())
+                        .build(),
+                User.builder()
+                        .id(1L)
+                        .name("Tomas 2")
+                        .lastName("Samot 2")
+                        .issues(new ArrayList<>())
+                        .age(54)
+                        .email("Tom2@gmail.com")
+                        .build(),
+                User.builder()
+                        .id(1L)
+                        .name("Tomas 3")
+                        .lastName("Samot 3")
+                        .age(54)
+                        .issues(new ArrayList<>())
+                        .email("Tom3@gmail.com")
+                        .build());
+
+        Issue issue = Issue.builder().id(1L).title("Title").description("Desc").build();
+
+        users.get(0).getIssues().add(issue);
     }
 
     @Test
@@ -106,13 +139,13 @@ class UserServiceImplTest {
                         .name("Name2")
                         .lastName("LastName2")
                         .build()
-                );
+        );
 
         //when
 
         //then
-        assertThrows(IllegalArgumentException.class,() -> userService.saveAll(users));
-        assertThrows(IllegalArgumentException.class,() -> userService.saveAll(null));
+        assertThrows(IllegalArgumentException.class, () -> userService.saveAll(users));
+        assertThrows(IllegalArgumentException.class, () -> userService.saveAll(null));
     }
 
     @Test
@@ -136,7 +169,7 @@ class UserServiceImplTest {
         when(userRepository.saveAll(users)).thenReturn(users);
 
         //then
-        assertEquals(3,userService.saveAll(users).size());
+        assertEquals(3, userService.saveAll(users).size());
     }
 
     @Test
@@ -160,10 +193,21 @@ class UserServiceImplTest {
         //given
         //when
         //then
-        assertFalse(userService.delete((User)null));
-        assertFalse(userService.delete((Long)null));
+        assertFalse(userService.delete((User) null));
+        assertFalse(userService.delete((Long) null));
     }
 
+    @Test
+    void findNotAssignedUsers() {
+        //given
+        Long issueId = 1L;
+
+        //when
+        when(userRepository.findAll()).thenReturn(users);
+
+        //then
+        assertEquals(2, userService.findNotAssigned(1L).size());
+    }
 }
 
 

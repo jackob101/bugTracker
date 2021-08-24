@@ -27,9 +27,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "sub", unique = true)
+    private String sub;
+
     @Size(min = 0, max = 100, message = "Name must be between 0 - 100 chars")
     @NotNull(message = "Name must not be empty")
     private String name;
+
+    @Size(min = 0, max = 100, message = "Nickname must be between 0 - 100 chars")
+    @NotNull(message = "Nickname must not be empty")
+    private String nickname;
 
     @Size(min = 0, max = 100, message = "Last name must be between 0 - 100 chars")
     @NotNull(message = "Last name must not be empty")
@@ -39,6 +46,10 @@ public class User {
     @NotNull(message = "Email cannot be null")
     @Column(unique = true)
     private String email;
+
+    @NotNull
+    @Column(name = "emailVerified")
+    private boolean emailVerified;
 
     @NotNull(message = "Age cannot be null")
     @Max(value = 200, message = "Max age is 200")

@@ -43,9 +43,9 @@ public class IssueSerializer extends StdSerializer<Issue> {
 
             for (User user : value.getUsers()) {
                 gen.writeStartObject();
-                gen.writeStringField("userName", user.getName());
-                gen.writeStringField("userLastName", user.getLastName());
-                gen.writeNumberField("userId", user.getId());
+                gen.writeStringField("name", user.getName());
+                gen.writeStringField("lastName", user.getLastName());
+                gen.writeNumberField("id", user.getId());
                 gen.writeEndObject();
             }
 

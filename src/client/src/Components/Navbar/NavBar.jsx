@@ -2,6 +2,7 @@ import React from "react";
 import AuthorizedNavBar from "./AuthorizedNavBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import GuestNavBar from "./GuestNavBar";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const { isAuthenticated } = useAuth0();
@@ -9,7 +10,10 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-xl navbar-dark  lightdark">
       <div className="container-fluid">
-        <a className="navbar-brand d-flex flex-row align-items-center" href="#">
+        <Link
+          className="navbar-brand d-flex flex-row align-items-center"
+          to="/"
+        >
           <img
             src={process.env.PUBLIC_URL + "/icon.svg"}
             alt="Logo"
@@ -21,7 +25,7 @@ const NavBar = () => {
           >
             Bug-tracker
           </h4>
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"

@@ -7,6 +7,7 @@ import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class UserSerializer extends StdSerializer<User> {
 
@@ -23,11 +24,14 @@ public class UserSerializer extends StdSerializer<User> {
 
         gen.writeStartObject();
 
-        gen.writeNumberField("id", value.getId());
+        gen.writeNumberField("id", Objects.requireNonNullElse(value.getId(), -1).intValue());
         gen.writeStringField("name", value.getName());
         gen.writeStringField("lastName", value.getLastName());
         gen.writeStringField("email", value.getEmail());
         gen.writeNumberField("age", value.getAge());
+        gen.writeBooleanField("email-verified", value.isEmailVerified());
+        gen.writeStringField("nickname", value.getNickname());
+        gen.writeStringField("sub", value.getSub());
         if (value.getIssues() != null) {
             gen.writeArrayFieldStart("issues");
             for (Issue issue : value.getIssues()) {

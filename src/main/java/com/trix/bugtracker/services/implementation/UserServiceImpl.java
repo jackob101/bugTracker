@@ -1,12 +1,15 @@
 package com.trix.bugtracker.services.implementation;
 
+import com.trix.bugtracker.DTO.Auth0Pojo;
 import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.repository.UserRepository;
 import com.trix.bugtracker.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -70,5 +73,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllByIds(List<Long> assignedUsersId) {
         return userRepository.findAllById(assignedUsersId);
+    }
+
+    @Override
+    public Boolean checkIfExist(Auth0Pojo auth0Pojo) {
+        Optional<User> bySub = userRepository.findBySub(auth0Pojo.getSub());
+        return bySub.isPresent();
+    }
+
+    @Override
+    public User findBySub(String sub) {
+        return userRepository.findBySub(sub).orElse(null);
+    }
+
+    @Override
+    public List<User> findNotAssigned(Long issueId) {
+        List<User> all = userRepository.findAll();
+        return all.stream().filter(user -> user.getIssues()
+                .stream()
+                .filter(issue -> Objects.equals(issue.getId(), issueId))
+                .findFirst().isEmpty()).collect(Collectors.toList());
+    }
+
+
+    private User createUser(Auth0Pojo auth0Pojo) {
+        return User.builder()
+                .nickname(auth0Pojo.getNickname())
+                .name(auth0Pojo.getName())
+                .emailVerified(auth0Pojo.isEmailVerified())
+                .email(auth0Pojo.getEmail())
+                .sub(auth0Pojo.getSub())
+                .build();
     }
 }

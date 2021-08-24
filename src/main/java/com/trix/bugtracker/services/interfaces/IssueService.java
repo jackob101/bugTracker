@@ -12,4 +12,8 @@ public interface IssueService extends CRUDService<Issue> {
     Issue update(IssueDTO issueDTO);
 
     Issue switchIssueClosedStatus(Long id);
+
+    Issue assignUser(Long issueId, Long userId);
+
+    Issue unAssignUser(Long issueId, Long userId);
 }

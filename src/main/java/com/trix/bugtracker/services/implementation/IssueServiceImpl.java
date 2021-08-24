@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IssueServiceImpl implements IssueService {
@@ -112,5 +113,28 @@ public class IssueServiceImpl implements IssueService {
             issue.setClosedTime(LocalDateTime.now());
         }
         return save(issue);
+    }
+
+    @Override
+    public Issue assignUser(Long issueId, Long userId) {
+        User userById = userService.findById(userId);
+        Issue issueById = findById(issueId);
+        if (!issueById.getUsers().contains(userById)) {
+            issueById.getUsers().add(userById);
+            return save(issueById);
+        }
+        return issueById;
+    }
+
+    @Override
+    public Issue unAssignUser(Long issueId, Long userId) {
+        Issue byId = findById(issueId);
+        List<User> filteredUsers = byId.getUsers()
+                .stream()
+                .filter(user -> !user.getId().equals(userId))
+                .collect(Collectors.toList());
+        byId.setUsers(filteredUsers);
+        save(byId);
+        return byId;
     }
 }
