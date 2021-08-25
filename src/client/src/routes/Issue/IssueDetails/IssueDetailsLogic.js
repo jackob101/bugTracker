@@ -42,7 +42,7 @@ const IssueDetailsLogic = () => {
 
   const onDelete = async (issue) => {
     const projectId = issue.project.id;
-    deleteRequest("/issue/delete", { id: issue.id });
+    await deleteRequest("/issue/delete", { id: issue.id });
     history.push("/project/issues/" + projectId);
   };
 

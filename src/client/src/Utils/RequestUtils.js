@@ -18,18 +18,18 @@ const useRequestUtils = (customHeaders) => {
   }
 
   async function post(url, body, params) {
-    return await axios.post(url, body, await getRequestHeaders(params));
+    return axios.post(url, body, await getRequestHeaders(params));
   }
   async function postDefaultHeaders(url, body) {
-    return await axios.post(url, body, await getRequestHeaders());
+    return axios.post(url, body, await getRequestHeaders());
   }
 
   async function get(url, params) {
-    return await axios.get(url, await getRequestHeaders(params));
+    return axios.get(url, await getRequestHeaders(params));
   }
 
   async function deleteRequest(url, params) {
-    return await axios.delete(url, await getRequestHeaders(params));
+    return axios.delete(url, await getRequestHeaders(params));
   }
 
   return { getRequestHeaders, post, postDefaultHeaders, get, deleteRequest };
