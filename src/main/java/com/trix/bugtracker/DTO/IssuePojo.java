@@ -22,7 +22,6 @@ public class IssuePojo {
     @NotNull
     private Long projectId;
 
-    @NotNull
     private String projectName;
 
     private LocalDateTime openedTime;

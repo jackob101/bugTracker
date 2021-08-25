@@ -21,8 +21,6 @@ const IssueDetailsLogic = () => {
     async function fetchData() {
       await axios.all([getIssue(), getUsers()]).then(
         axios.spread((issue, users) => {
-          console.log("Issue", issue);
-          console.log("user", users);
           setIssue(issue.data);
           setUsers(users.data);
           setLoading(false);

@@ -10,7 +10,7 @@ import ProjectPage from "routes/Project/ProjectsList/ProjectListPage";
 import ProjectIssues from "routes/Issue/ProjectIssues/ProjectIssues";
 import IssueEdit from "routes/Issue/IssueEdit/IssueEdit";
 import IssueDetails from "routes/Issue/IssueDetails/IssueDetails";
-import NewIssue from "routes/Issue/NewIssue";
+import NewIssue from "routes/Issue/NewIssue/NewIssue";
 import AfterLogin from "Data/AfterLogin";
 import { Toaster } from "react-hot-toast";
 import Login from "routes/Login";
@@ -62,7 +62,7 @@ const App = () => {
         ></ProtectedRoute>
         <ProtectedRoute
           exact
-          path="/issue/new"
+          path="/issue/new/:id"
           component={NewIssue}
         ></ProtectedRoute>
       </Switch>

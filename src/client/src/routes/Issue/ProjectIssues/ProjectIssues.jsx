@@ -22,7 +22,7 @@ const ProjectIssues = () => {
         <ProjectTable columns={columns} data={project.issues}>
           <Link
             to={{
-              pathname: "/issue/new",
+              pathname: "/issue/new/" + project.id,
               aboutProps: {
                 projectId: project.id,
               },

@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "Data/Axios";
 
-const useRequestUtils = (customHeaders) => {
+const useRequestUtils = () => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function getRequestHeaders(params) {

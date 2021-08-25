@@ -12,7 +12,6 @@ const ProjectIssuesLogic = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("calling API");
       get("/issue/project?id=" + id).then((response) => {
         setProject(response.data);
         setLoading(false);
