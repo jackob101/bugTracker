@@ -18,6 +18,15 @@ const ProjectIssuesLogic = () => {
       });
     })();
   }, []);
+
+  const transformString = (tekst) => {
+    let transformed = tekst.toLowerCase();
+    transformed =
+      transformed.charAt(0).toUpperCase() + transformed.substring(1);
+    transformed = transformed.replace("_", " ");
+    return transformed;
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -27,8 +36,19 @@ const ProjectIssuesLogic = () => {
         disableSortBy: true,
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Title",
+        accessor: "title",
+      },
+      {
+        Header: "Priority",
+        accessor: "priority",
+        Cell: ({ row: { original } }) => {
+          return (
+            <div className="text-left">
+              {transformString(original.priority)}
+            </div>
+          );
+        },
       },
       {
         accessor: "",
