@@ -1,6 +1,7 @@
 package com.trix.bugtracker.model.Issue;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trix.bugtracker.model.Comment.Comment;
 import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.model.enums.Priority;
@@ -43,6 +44,7 @@ public class Issue {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "createdById", referencedColumnName = "id")
     private User createdBy;
 
     @ManyToMany
@@ -53,10 +55,13 @@ public class Issue {
     )
     private List<User> users;
 
-
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
+
+    @OneToMany(mappedBy = "issue", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     public Issue() {
         this.description = "";
@@ -65,6 +70,7 @@ public class Issue {
         this.closedTime = null;
         this.priority = Priority.IMPORTANT;
         this.users = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     @Override

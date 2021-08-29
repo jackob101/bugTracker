@@ -1,6 +1,7 @@
 package com.trix.bugtracker.model.User;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trix.bugtracker.model.Comment.Comment;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,9 @@ public class User {
 
     @OneToMany(mappedBy = "createdBy")
     private List<Issue> submittedIssues;
+
+    @OneToMany(mappedBy = "commentOwner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     public User(Long id, String name, String lastName, String email, int age) {
         this.id = id;
