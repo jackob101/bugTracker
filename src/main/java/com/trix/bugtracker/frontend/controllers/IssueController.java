@@ -1,5 +1,10 @@
 package com.trix.bugtracker.frontend.controllers;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.DTO.IssuePojo;
 import com.trix.bugtracker.DTO.ProjectIssues;
@@ -10,14 +15,18 @@ import com.trix.bugtracker.model.Project.Project;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import com.trix.bugtracker.services.interfaces.UserService;
+
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping(path = "issue", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
@@ -32,7 +41,7 @@ public class IssueController {
         this.issueService = issueService;
         this.projectService = projectService;
         this.usersService = usersService;
-        this.validator = validator;
+	this.validator = validator;
     }
 
     @GetMapping(path = "{id}")
@@ -74,7 +83,6 @@ public class IssueController {
         issue.setProject(projectService.findById(issuePojo.getProjectId()));
         issue.setCreatedBy(usersService.findById(issuePojo.getCreatedBy()));
         issue.setTitle(issuePojo.getTitle());
-
         validator.validate(issue, bindingResult);
 
         Issue saved = issueService.save(issue);

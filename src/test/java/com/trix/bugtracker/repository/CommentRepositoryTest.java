@@ -15,6 +15,7 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
 @TestPropertySource(properties = {
@@ -93,4 +94,7 @@ class CommentRepositoryTest {
 
         //then
     }
+
+
+    
 }

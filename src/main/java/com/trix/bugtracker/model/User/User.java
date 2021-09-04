@@ -24,66 +24,61 @@ import java.util.List;
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "sub", unique = true)
-    private String sub;
+	@Column(name = "sub", unique = true)
+	private String sub;
 
-    @Size(min = 0, max = 100, message = "Name must be between 0 - 100 chars")
-    @NotNull(message = "Name must not be empty")
-    private String name;
+	@Size(min = 0, max = 100, message = "Name must be between 0 - 100 chars")
+	@NotNull(message = "Name must not be empty")
+	private String name;
 
-    @Size(min = 0, max = 100, message = "Nickname must be between 0 - 100 chars")
-    @NotNull(message = "Nickname must not be empty")
-    private String nickname;
+	@Size(min = 0, max = 100, message = "Nickname must be between 0 - 100 chars")
+	@NotNull(message = "Nickname must not be empty")
+	private String nickname;
 
-    @Size(min = 0, max = 100, message = "Last name must be between 0 - 100 chars")
-    @NotNull(message = "Last name must not be empty")
-    private String lastName;
+	@Size(min = 0, max = 100, message = "Last name must be between 0 - 100 chars")
+	@NotNull(message = "Last name must not be empty")
+	private String lastName;
 
-    @Email(message = "Please insert correct email")
-    @NotNull(message = "Email cannot be null")
-    @Column(unique = true)
-    private String email;
+	@Email(message = "Please insert correct email")
+	@NotNull(message = "Email cannot be null")
+	@Column(unique = true)
+	private String email;
 
-    @NotNull
-    @Column(name = "emailVerified")
-    private boolean emailVerified;
+	@NotNull
+	@Column(name = "emailVerified")
+	private boolean emailVerified;
 
-    @NotNull(message = "Age cannot be null")
-    @Max(value = 200, message = "Max age is 200")
-    private int age;
+	@NotNull(message = "Age cannot be null")
+	@Max(value = 200, message = "Max age is 200")
+	private int age;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Issue> issues;
+	@ManyToMany(mappedBy = "users")
+	private List<Issue> issues;
 
-    @ManyToMany(mappedBy = "assignedUsers")
-    private List<Project> projects;
+	@ManyToMany(mappedBy = "assignedUsers")
+	private List<Project> projects;
 
-    @OneToMany(mappedBy = "createdBy")
-    private List<Issue> submittedIssues;
+	@OneToMany(mappedBy = "createdBy")
+	private List<Issue> submittedIssues;
 
-    @OneToMany(mappedBy = "commentOwner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Comment> comments;
+	@OneToMany(mappedBy = "commentOwner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private List<Comment> comments;
 
-    public User(Long id, String name, String lastName, String email, int age) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
-    }
+	public User(Long id, String name, String lastName, String email, int age) {
+		this.id = id;
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.age = age;
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "User{" + "id=" + id + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email
+				+ '\'' + ", age=" + age + '}';
+	}
 }

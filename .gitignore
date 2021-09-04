@@ -31,3 +31,16 @@ build/
 
 ### VS Code ###
 .vscode/
+/#start.sh#
+/.#start.sh
+/.attach_pid17226
+/.dir-locals.el~
+/.envrc~
+/.envrc
+/run.sh~
+/run.sh
+/src/main/java/com/trix/bugtracker/services/implementation/#ProjectServiceImpl.java#
+/src/main/java/com/trix/bugtracker/services/implementation/ExampleClass.java~
+/src/client/.env
+/.env
+/src/main/java/com/trix/bugtracker/services/implementation/ExampleClass.java

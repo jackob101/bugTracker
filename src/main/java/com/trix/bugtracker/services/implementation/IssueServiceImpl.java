@@ -1,6 +1,10 @@
 package com.trix.bugtracker.services.implementation;
 
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.User.User;
@@ -8,11 +12,8 @@ import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import com.trix.bugtracker.services.interfaces.UserService;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class IssueServiceImpl implements IssueService {

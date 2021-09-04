@@ -1,6 +1,5 @@
 package com.trix.bugtracker.DTO;
 
-
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.enums.Priority;
 import lombok.Data;
@@ -13,39 +12,44 @@ import java.time.LocalDateTime;
 @Data
 public class IssuePojo {
 
-    @NotNull
-    private String description;
 
-    @NotNull
-    private String title;
+	@NotNull
+	private String description;
 
-    @NotNull
-    private Long projectId;
+	@NotNull
+	private String title;
 
-    private String projectName;
+	@NotNull
+	private Long projectId;
 
-    private LocalDateTime openedTime;
-    private LocalDateTime closedTime;
+	private String projectName;
 
-    @NotNull
-    private Priority priority;
+	private LocalDateTime openedTime;
+	private LocalDateTime closedTime;
 
-    @NotNull
-    private Long createdBy;
+	@NotNull
+	private Priority priority;
 
-    public IssuePojo(Issue issue) {
-        this.description = issue.getDescription();
-        this.openedTime = issue.getOpenedTime();
-        this.closedTime = issue.getClosedTime();
-        this.priority = issue.getPriority();
-        if (issue.getProject() != null) {
-            this.projectId = issue.getProject().getId();
-            this.projectName = issue.getProject().getName();
-        } else {
-            this.projectId = 1L;
-            this.projectName = "";
-        }
-    }
+	@NotNull
+	private Long createdBy;
 
+	@Override
+	public String toString() {
+		return "IssuePojo [projectName=" + projectName + "]";
+	}
+
+	public IssuePojo(Issue issue) {
+		this.description = issue.getDescription();
+		this.openedTime = issue.getOpenedTime();
+		this.closedTime = issue.getClosedTime();
+		this.priority = issue.getPriority();
+		if (issue.getProject() != null) {
+			this.projectId = issue.getProject().getId();
+			this.projectName = issue.getProject().getName();
+		} else {
+			this.projectId = 1L;
+			this.projectName = "";
+		}
+	}
 
 }

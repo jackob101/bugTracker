@@ -1,5 +1,23 @@
 package com.trix.bugtracker.services.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+
+
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
@@ -8,6 +26,7 @@ import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import com.trix.bugtracker.services.interfaces.UserService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,22 +36,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class IssueServiceImplTest {
 
 
     @Mock
     IssueRepository issueRepository;
+
 
     @Mock
     UserService userService;
@@ -45,6 +55,7 @@ class IssueServiceImplTest {
 
 
     Issue issue;
+
 
     @BeforeEach
     void setUp() {
@@ -276,5 +287,13 @@ class IssueServiceImplTest {
         assertNull(update.getClosedTime());
         assertEquals(Priority.IMPORTANT, update.getPriority());
         assertEquals(users.size(), update.getUsers().size());
+    }
+
+    @Test
+    void testMethods(){
+		ExampleClass exampleClass = new ExampleClass();
+		exampleClass.setExampleName("THis is example name");
+		exampleClass.setExampleSecondName("This is example second name");
+		System.out.println(exampleClass);
     }
 }
