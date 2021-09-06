@@ -87,7 +87,20 @@ const IssueDetailsLogic = () => {
 
     const onCommentDelete = (row) =>{
 	
-	console.log(row);
+	deleteRequest("/comment/delete", {id:row.id})
+	    .then(response => {
+		setIssue({
+		    ...issue,
+		    comments: issue.comments.filter(comment => comment.id !== row.id)
+		    
+		})
+		if(response.data){
+		    toast.success("Comment deleted successfully")
+		}else{
+		    toast.error("Error occured while deleting comment")
+		}
+	    })
+
     }
 
     const commentsColumns = React.useMemo(
@@ -127,7 +140,7 @@ const IssueDetailsLogic = () => {
 		    }
 		}
 	    }
-	], []
+	], [onCommentDelete]
     )
 
     const onChange = (event) =>{
@@ -171,6 +184,7 @@ const IssueDetailsLogic = () => {
 	commentsColumns,
 	onChange,
 	onSubmit,
+	onCommentDelete,
     };
 };
 

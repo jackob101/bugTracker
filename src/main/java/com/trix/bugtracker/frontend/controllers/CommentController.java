@@ -6,6 +6,7 @@ import com.trix.bugtracker.DTO.CommentDTO;
 import com.trix.bugtracker.model.Comment.Comment;
 import com.trix.bugtracker.services.interfaces.CommentService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +32,15 @@ public class CommentController{
     }
 
     @GetMapping(value="all")
-    public List<Comment> getAllComments(@RequestParam String param) {
+    public List<Comment> getAllComments() {
 
 	return commentService.findAll();
+    }
+
+    @DeleteMapping(value = "/delete")
+    public boolean deleteComment(@RequestParam Long id){
+	return commentService.delete(id);
+	
     }
     
 
