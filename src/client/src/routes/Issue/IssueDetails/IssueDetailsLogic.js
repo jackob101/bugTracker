@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import RequestUtils from "Utils/RequestUtils";
@@ -11,7 +11,10 @@ const IssueDetailsLogic = () => {
   const history = useHistory();
   const { get, deleteRequest, post } = RequestUtils();
 
+
+    const userId = parseInt(localStorage.getItem("userId"));
   const [issue, setIssue] = useState();
+    const [comment, setComment] = useState("");
   const [users, setUsers] = useState([]);
   const [isClosed, setIsClosed] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -24,7 +27,7 @@ const IssueDetailsLogic = () => {
           setIssue(issue.data);
           setUsers(users.data);
           setLoading(false);
-          setIsClosed(issue.data.closedTime != "null");
+          setIsClosed(issue.data.closedTime !== "null");
         })
       );
     }
@@ -82,17 +85,93 @@ const IssueDetailsLogic = () => {
     history.push("/project/issues/" + issue.project.id);
   };
 
-  return {
-    issue,
-    loading,
-    onDelete,
-    onToggleIssueClosedStatus,
-    onReturnToIssues,
-    isClosed,
-    users,
-    assignUser,
-    unassignUser,
-  };
+    const onCommentDelete = (row) =>{
+	
+	console.log(row);
+    }
+
+    const commentsColumns = React.useMemo(
+	() => [
+	    {
+		accessor: "index",
+		Headers: "#",
+		Cell :({row: {index} }) => index + 1,
+		disableSortBy: true,
+	    },
+	    {
+		accessor: "comment",
+		Header: "Comment",
+	    },
+	    {
+		accessor: "",
+		Header: "User",
+		Cell:  ({row: {original}}) =>{
+		    return original.userName + " " + original.userLastName;
+		}
+	    },
+	    {
+		accessor: "date",
+		Header: "Posted on",
+		Cell: ({row: {original}}) =>{
+		    return original.creationDate.split("T")[0]
+		}
+	    },
+	    {
+		accessor: "controls",
+		Headers: "Controls",
+		Cell:({row: {original}}) =>{
+		    if(original.userId === userId){
+			return <button className="btn btn-outline-secondary" onClick={() => onCommentDelete(original)}>Delete</button>
+		    }else{
+			return "";
+		    }
+		}
+	    }
+	], []
+    )
+
+    const onChange = (event) =>{
+	const value = event.target.value;
+	setComment(value);
+    }
+
+    const onSubmit = (event) =>{
+	event.preventDefault();
+	if(comment.length > 5){
+	    const requestBody = {
+		comment,
+		issueId: issue.id,
+		userId: parseInt(localStorage.getItem('userId')),
+	    }
+	    post("/comment/new", requestBody)
+		.then(response => {
+		    setIssue({
+			...issue,
+			comments:[
+			    ...issue.comments,
+			    response.data,
+			]	
+		    });
+		    toast.success("Comment created successfully")
+		});
+	}
+    }
+	
+    
+    return {
+	issue,
+	loading,
+	onDelete,
+	onToggleIssueClosedStatus,
+	onReturnToIssues,
+	isClosed,
+	users,
+	assignUser,
+	unassignUser,
+	commentsColumns,
+	onChange,
+	onSubmit,
+    };
 };
 
 export default IssueDetailsLogic;

@@ -12,7 +12,7 @@ const ProjectPage = () => {
       <h4 className="text-center mb-3 text-secondary">
         {"Opened public projects : " + data.length}
       </h4>
-      <PagedTable columns={columns} data={data} />
+	<PagedTable columns={columns} data={data} showPageSize={true}/>
     </Layout>
   );
 };

@@ -18,6 +18,9 @@ const IssueDetails = () => {
     users,
     assignUser,
     unassignUser,
+      commentsColumns,
+      onChange,
+      onSubmit,
   } = IssueDetailsLogic();
 
   const columns = React.useMemo(
@@ -86,12 +89,12 @@ const IssueDetails = () => {
         {/* Comments */}
         <div className="d-flex flex-column flex-grow-1 m-3 f-col m-3">
           <SectionHeader text="Comments"></SectionHeader>
-          <div
-            className="flex-grow-1 bg-dark"
-            style={{
-              height: 300,
-            }}
-          ></div>
+            <Pagedtable columns={commentsColumns} data={issue.comments} defaultPageSize="10"/>
+	    <form className="d-flex flex-column width-80 my-3 mx-auto" onSubmit={onSubmit}>
+		<textarea className="flex-grow-1" id="comment" rows="5" name="comment" onChange={onChange} />
+
+		<button type="submit" className="btn btn-outline-primary">Submit</button>
+	    </form>
         </div>
       </div>
       <div className="d-flex flex-wrap flex-row">
@@ -103,6 +106,7 @@ const IssueDetails = () => {
             data={issue.users}
             onRowClick={unassignUser}
           ></Pagedtable>
+
         </div>
         <div className="d-flex flex-column flex-grow-1 m-3 f-col m-3">
           <SectionHeader text="All users" />

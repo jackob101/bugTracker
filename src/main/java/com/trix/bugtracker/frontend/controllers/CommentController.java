@@ -25,6 +25,7 @@ public class CommentController{
 
     @PostMapping(path = "new") 
     public Comment saveComment(@RequestBody CommentDTO commentDTO){
+	System.out.println(commentDTO);
 	return commentService.save(commentDTO);
 	
     }

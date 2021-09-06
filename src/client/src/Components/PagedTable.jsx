@@ -1,7 +1,7 @@
 import React from "react";
 import { useTable, usePagination, useSortBy } from "react-table";
 
-const Pagedtable = ({ columns, data, children, className, onRowClick }) => {
+const Pagedtable = ({ columns, data, children, className, onRowClick, showPageSize, defaultPageSize }) => {
   const {
     page,
     getTableBodyProps,
@@ -20,7 +20,7 @@ const Pagedtable = ({ columns, data, children, className, onRowClick }) => {
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 15 },
+	initialState: { pageIndex: 0, pageSize: defaultPageSize ? defaultPageSize : 15 },
     },
     useSortBy,
     usePagination
@@ -42,7 +42,7 @@ const Pagedtable = ({ columns, data, children, className, onRowClick }) => {
                   {column.render("Header")}
                   {column.canSort ? (
                     column.isSorted ? (
-                      <img
+                     <img
                         src={
                           column.isSortedDesc
                             ? process.env.PUBLIC_URL + "/angle-down-solid.svg"
@@ -138,19 +138,22 @@ const Pagedtable = ({ columns, data, children, className, onRowClick }) => {
             style={{ width: "100px" }}
           />
         </span>{" "}
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[3, 7, 15].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
+	  {showPageSize ? 
+           <select
+               value={pageSize}
+               onChange={(e) => {
+		   setPageSize(Number(e.target.value));
+               }}
+           >
+               {[3, 7, 15].map((pageSize) => (
+		   <option key={pageSize} value={pageSize}>
+		       Show {pageSize}
+		   </option>
+               ))}
+           </select>
+	   :""
+	  }
+    </div>
     </React.Fragment>
   );
 };

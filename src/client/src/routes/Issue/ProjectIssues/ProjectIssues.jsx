@@ -19,7 +19,7 @@ const ProjectIssues = () => {
         {"Open issues: " + project.issues.length}
       </h4>
       <div className="d-flex align-items-center justify content center flex-column">
-        <ProjectTable columns={columns} data={project.issues}>
+          <ProjectTable columns={columns} data={project.issues} showPageSize={true}>
           <Link
             to={{
               pathname: "/issue/new/" + project.id,
