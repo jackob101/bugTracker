@@ -1,10 +1,13 @@
 package com.trix.bugtracker.model.Comment;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonSerialize(using = CommentSerializer.class)
 @Entity
 public class Comment {
 
@@ -33,11 +37,16 @@ public class Comment {
     @JoinColumn(name = "issue_id")
     private Issue issue;
 
+    @NotNull
+    @Column(name = "creationDate")
+    private LocalDateTime creationDate;
+
     public Comment(Long id, String comment, User commentOwner, Issue issue) {
         this.id = id;
         this.comment = comment;
         this.commentOwner = commentOwner;
         this.issue = issue;
+	this.creationDate = LocalDateTime.now();
     }
 
     @Override

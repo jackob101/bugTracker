@@ -3,6 +3,7 @@ package com.trix.bugtracker.model.Issue;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.trix.bugtracker.model.Comment.Comment;
 import com.trix.bugtracker.model.User.User;
 
 import java.io.IOException;
@@ -60,6 +61,21 @@ public class IssueSerializer extends StdSerializer<Issue> {
             gen.writeNumberField("id", value.getProject().getId());
             gen.writeEndObject();
         }
+
+	if(value.getComments() != null){
+	    gen.writeArrayFieldStart("comments");
+	    for(Comment comment : value.getComments()){
+		gen.writeStartObject();
+		gen.writeNumberField("id", comment.getId());
+		gen.writeStringField("comment", comment.getComment());
+		gen.writeStringField("creationDate", comment.getCreationDate().toString());
+		gen.writeStringField("userName", comment.getCommentOwner().getName());
+		gen.writeStringField("userLastName", comment.getCommentOwner().getLastName());
+		gen.writeNumberField("userId", comment.getCommentOwner().getId());
+		gen.writeEndObject();
+	    }
+	    gen.writeEndArray();
+	}
 
         gen.writeEndObject();
 
