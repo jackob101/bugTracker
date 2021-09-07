@@ -85,13 +85,11 @@ class CommentRepositoryTest {
         //given
 
         //when
-        userRepository.findAll().forEach(System.out::println);
-        issueRepository.findAll().forEach(System.out::println);
-        List<Project> all = projectRepository.findAll();
-        System.out.println("Projects");
-        all.forEach(System.out::println);
-        all.forEach(project -> project.getIssues().forEach(System.out::println));
-
+	commentRepository.findAll().forEach(System.out::println);
+	projectRepository.findAll().forEach(project -> {
+		System.out.println("Project");
+		System.out.println(project.getAssignedUsers());
+	    });
         //then
     }
 
