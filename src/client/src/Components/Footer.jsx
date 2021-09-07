@@ -14,7 +14,7 @@ const Footer = () => {
           <a href="www.flaticon.com"> www.flaticon.com</a>
         </p>
         <p className="m-0 text-center text-white">
-          Arrow icons made by
+            Arrows, checmarks, cogs and square icons made by
           <a href="https://fontawesome.com/license"> Font awesome </a>. No
           changes were made
         </p>

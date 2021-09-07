@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Loading from "Components/Loading";
 import IssueDetailsLogic from "routes/Issue/IssueDetails/IssueDetailsLogic";
 import Pagedtable from "Components/PagedTable";
+import CommentCard from "Components/CommentCard"
 
 const IssueDetails = () => {
   const {
@@ -37,13 +38,21 @@ const IssueDetails = () => {
     []
   );
 
+    console.log(issue);
+
+    let badge = "badge rounded-pill fs-6 me-2 "
+    let icon = isClosed ? "/checkmark.svg" : "/square.svg";
+    let text = isClosed ? "Closed" : "Open";
+    badge += isClosed ? "bg-danger" : "bg-success";
+
   return loading ? (
     <Loading />
   ) : (
     <Layout>
+	{/*	
       <button onClick={onReturnToIssues}>Go back</button>
       <div className="d-flex flex-row flex-wrap">
-        {/* Ticked details */}
+        {/* Ticked details /}
         <div className="f-col flex-column d-flex m-3">
           <SectionHeader text="Ticked Details">
             <div className="d-flex flex-row justify-content-center">
@@ -86,7 +95,7 @@ const IssueDetails = () => {
             <TextFieldDesc title="Closed" text={isClosed ? "Yes" : "No"} />
           </div>{" "}
         </div>
-        {/* Comments */}
+        {/* Comments /}
         <div className="d-flex flex-column flex-grow-1 m-3 f-col m-3">
           <SectionHeader text="Comments"></SectionHeader>
             <Pagedtable columns={commentsColumns} data={issue.comments} defaultPageSize="10"/>
@@ -117,7 +126,54 @@ const IssueDetails = () => {
             onRowClick={assignUser}
           ></Pagedtable>
         </div>
-      </div>
+      </div>*/}
+	<div>
+	    <button onClick={onReturnToIssues} className="my-4 mx-4 btn-link btn fs-3 text-decoration-none" >{issue.project.name}</button>
+	</div>
+	<div style={{maxWidth:"1280px",
+		     paddingLeft: "32px",
+		     paddingRight: "32px"}} className="mx-auto d-flex flex-column">
+	    <div>
+		<h2>{issue.title}</h2>
+		<div className="d-flex flex-row align-items-center">
+
+		    <div className={badge}>
+			<div className=" d-flex flex-row">
+			     <img style={{width: "16px"}}  src={process.env.PUBLIC_URL + icon} alt=""/>
+			     <span className="mx-1 d-flex flex-row align-items-center">{text}</span>
+			 </div>
+		    </div>
+
+		    <div className="d-flex align-items-center">
+			<div style={{fontWeight: "bold"}}>{issue.createdBy.name + " " + issue.createdBy.lastName}</div>
+			<div>&nbsp;</div>
+			<div>{"opened this issue on " + issue.createdDate}</div>
+			<div className="mx-2">●</div>
+			<div>{issue.comments.length + " comments"}</div>
+		    </div>
+		</div>
+	    </div> 
+	    <hr/>
+	    <div className="d-flex flex-row">
+		<div className="d-flex flex-column" style={{width:"74%"}}>
+
+		    <CommentCard name={issue.createdBy.name}
+				 lastName={issue.createdBy.lastName}
+				 body={issue.description}
+				 date={issue.createdDate}/>
+
+		    {issue.comments.map(comment => <CommentCard name={comment.userName}
+								lastName={comment.userLastName}
+								body={comment.comment}
+								date={comment.creationDate.split("T")[0]}/>)}
+		</div>
+
+		<div className="d-flex flex-column">
+
+		</div>
+
+	    </div>
+	</div>
     </Layout>
   );
 };
