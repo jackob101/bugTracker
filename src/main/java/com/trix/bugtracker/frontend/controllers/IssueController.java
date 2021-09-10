@@ -48,6 +48,7 @@ public class IssueController {
     public Issue findById(@PathVariable(value = "id") Long id) {
 
         Issue issueById = issueService.findById(id);
+	System.out.println(issueById.getUsers());
 
         if (issueById == null)
             throw new IssueNotFoundException(id);

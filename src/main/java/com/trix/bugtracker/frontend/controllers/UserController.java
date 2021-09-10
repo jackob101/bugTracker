@@ -66,6 +66,7 @@ public class UserController {
 
     @GetMapping(path = "/notAssigned")
     public List<User> getNotAssignedUsers(@RequestParam(value = "issueId") Long id) {
+	
         return userService.findNotAssigned(id);
     }
 

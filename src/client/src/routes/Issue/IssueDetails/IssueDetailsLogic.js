@@ -13,7 +13,7 @@ const IssueDetailsLogic = () => {
 
 
     const userId = parseInt(localStorage.getItem("userId"));
-  const [issue, setIssue] = useState();
+    const [issue, setIssue] = useState({});
     const [comment, setComment] = useState("");
   const [users, setUsers] = useState([]);
   const [isClosed, setIsClosed] = useState(false);
@@ -60,24 +60,26 @@ const IssueDetailsLogic = () => {
     });
   };
 
-  const assignUser = async (row) => {
-    post("/issue/assign", {}, { issueId: issue.id, userId: row.id }).then(
+  const assignUser = async (id) => {
+      console.log(id);
+    post("/issue/assign", {}, { issueId: issue.id, userId: id }).then(
       (response) => {
         setIssue(response.data);
       }
     );
-    const newUsers = users.filter((user) => user.id != row.id);
+    const newUsers = users.filter((user) => user.id != id);
     setUsers(newUsers);
   };
 
-  const unassignUser = async (row) => {
-    post("/issue/unassign", {}, { issueId: issue.id, userId: row.id }).then(
+  const unassignUser = async (user) => {
+      console.log(user);
+    post("/issue/unassign", {}, { issueId: issue.id, userId: user.id }).then(
       (response) => {
         setIssue(response.data);
       }
     );
     let newUsers = users.slice();
-    newUsers.push({ id: row.id, name: row.name, lastName: row.lastName });
+    newUsers.push({ id: user.id, name: user.name, lastName: user.lastName });
     setUsers(newUsers);
   };
 
@@ -169,7 +171,35 @@ const IssueDetailsLogic = () => {
 		});
 	}
     }
-	
+   
+    const detailsContent = () => {
+	return [
+	    {
+		title: "Assigned",
+		body: issue.users.map((user, index) => <div className="d-flex flex-row"><span className="flex-grow-1 d-flex align-items-center" key={index}>{user.name + " " + user.lastName}</span><button onClick={() => unassignUser(user)} className="btn">-</button></div>),
+		option: {
+		    title: "Assign people",
+		    body: [
+			<input className="option-search-bar" placeholder="Search"/>,
+			users.map((user, index) => <button key={index} onClick={() => assignUser(user.id)} className="option-entry">{user.name + " " + user.lastName}</button>)    
+		    ]
+		}
+	    },
+	    {
+		title: "Priority",
+		body:[
+		    <p>{issue.priority}</p>
+		],
+		option: {
+		    title: "Change priority",
+		    body:[
+			<p>Hello</p>  
+		    ] 
+		}
+	    },
+	]
+    }
+    
     
     return {
 	issue,
@@ -185,6 +215,7 @@ const IssueDetailsLogic = () => {
 	onChange,
 	onSubmit,
 	onCommentDelete,
+	detailsContent,
     };
 };
 

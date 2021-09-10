@@ -68,3 +68,32 @@
   flex: 1;
   flex-basis: 0;
 }
+
+.option-box{
+    transition: ease-out 0.2s;
+    padding: 1em;
+}
+
+.option-box *{
+    color:white;
+    z-index: 9999;
+}
+
+.option-entry{
+    background: transparent;
+    border: none;
+    text-align: left;
+    transition: ease-out 0.2s;
+}
+
+.option-entry:hover{
+    background: #FFFFFF20; 
+}
+
+.option-search-bar{
+    background: #161a1d;
+    border: 1px solid #293241;
+    margin: 0.2em;
+    margin-bottom: 0.5em;
+    border-radius: 2px;
+}
