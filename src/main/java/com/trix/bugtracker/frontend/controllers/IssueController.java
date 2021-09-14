@@ -12,6 +12,7 @@ import com.trix.bugtracker.converters.ProjectConverter;
 import com.trix.bugtracker.frontend.exceptions.IssueNotFoundException;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.Project.Project;
+import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import com.trix.bugtracker.services.interfaces.ProjectService;
 import com.trix.bugtracker.services.interfaces.UserService;
@@ -48,7 +49,6 @@ public class IssueController {
     public Issue findById(@PathVariable(value = "id") Long id) {
 
         Issue issueById = issueService.findById(id);
-	System.out.println(issueById.getUsers());
 
         if (issueById == null)
             throw new IssueNotFoundException(id);
@@ -112,6 +112,11 @@ public class IssueController {
     @PostMapping(path = "unassign")
     public Issue unAssignUser(@RequestParam("issueId") Long issueId, @RequestParam("userId") Long userId) {
         return issueService.unAssignUser(issueId, userId);
+    }
+
+    @PostMapping(path = "edit/priority")
+    public Issue changePriority(@RequestParam("issueId") Long issueId, @RequestParam("priority") Priority priority){
+	return issueService.changePriority(issueId, priority);
     }
 
 

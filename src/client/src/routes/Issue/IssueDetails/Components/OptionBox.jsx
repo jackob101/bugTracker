@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 
 const OptionBox = ({isOptionOpen, optionConfig}) =>{
@@ -17,6 +17,6 @@ const OptionBox = ({isOptionOpen, optionConfig}) =>{
 	    </div>
 	</div>
     );
-}
+};
 
 export default OptionBox;

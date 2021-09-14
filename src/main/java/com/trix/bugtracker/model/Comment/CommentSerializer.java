@@ -22,7 +22,11 @@ public class CommentSerializer extends StdSerializer<Comment>{
 	    gen.writeStartObject();
 	    gen.writeNumberField("id", value.getId());
 	    gen.writeStringField("comment", value.getComment());
-	    gen.writeNumberField("userId", value.getCommentOwner().getId());
+	    gen.writeObjectFieldStart("user");
+	    gen.writeNumberField("id", value.getCommentOwner().getId());
+	    gen.writeStringField("name", value.getCommentOwner().getName());
+	    gen.writeStringField("lastName", value.getCommentOwner().getLastName());
+	    gen.writeEndObject();
 	    gen.writeNumberField("issueId", value.getIssue().getId());
 	    gen.writeStringField("creationDate", value.getCreationDate().toString());
 	    gen.writeEndObject();

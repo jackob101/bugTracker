@@ -19,7 +19,6 @@ const AfterLogin = () => {
         },
       };
       axios.get(serverUrl + "/user/1", headers).then((response) => {
-        console.log("fetched user info");
         setLoading(false);
       });
     })();

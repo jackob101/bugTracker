@@ -1,10 +1,10 @@
-import React from "react"
-import {useState} from "react"
-import OptionBox from "./OptionBox.jsx"
+import React from "react";
+import {useState} from "react";
+import OptionBox from "./OptionBox.jsx";
 
 const Detail = ({content}) =>{
     
-    const [isOptionOpen, setOptionOpen] = useState(false)
+    const [isOptionOpen, setOptionOpen] = useState(false);
     
     return (
 	<div className="d-flex flex-column ">
@@ -21,7 +21,7 @@ const Detail = ({content}) =>{
 	    </div>
 	    <hr/>
 	</div>
-    )
-}
+    );
+};
 
 export default Detail;

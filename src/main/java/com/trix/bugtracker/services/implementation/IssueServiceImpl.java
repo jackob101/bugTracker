@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
 import com.trix.bugtracker.model.User.User;
+import com.trix.bugtracker.model.enums.Priority;
 import com.trix.bugtracker.repository.IssueRepository;
 import com.trix.bugtracker.services.interfaces.IssueService;
 import com.trix.bugtracker.services.interfaces.ProjectService;
@@ -138,4 +139,11 @@ public class IssueServiceImpl implements IssueService {
         save(byId);
         return byId;
     }
+
+	@Override
+	public Issue changePriority(Long issueId, Priority priority) {
+	    Issue issueById = this.findById(issueId);
+	    issueById.setPriority(priority);
+	    return this.save(issueById);
+	}
 }

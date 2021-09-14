@@ -1,10 +1,9 @@
-import React from "react"
-import Detail from "./Detail.jsx"
+import React from "react";
+import Detail from "./Detail.jsx";
 
 const DetailsPanel = ({issue, content}) =>{
     
 
-    console.log(content)
     return (
 	<div style={{width:"25%"}} className="p-4">
 

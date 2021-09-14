@@ -42,6 +42,5 @@ public class CommentController{
 	return commentService.delete(id);
 	
     }
-    
 
 }

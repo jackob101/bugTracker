@@ -2,6 +2,7 @@ package com.trix.bugtracker.services.interfaces;
 
 import com.trix.bugtracker.DTO.IssueDTO;
 import com.trix.bugtracker.model.Issue.Issue;
+import com.trix.bugtracker.model.enums.Priority;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IssueService extends CRUDService<Issue> {
     Issue assignUser(Long issueId, Long userId);
 
     Issue unAssignUser(Long issueId, Long userId);
+
+    Issue changePriority(Long issueId, Priority priority);
 }
