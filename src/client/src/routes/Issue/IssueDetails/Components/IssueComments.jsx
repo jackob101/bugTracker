@@ -3,7 +3,7 @@ import CommentCard from "Components/CommentCard";
 import IssueCommentsLogic from "./IssueCommentsLogic";
 import IssueDescription from "./IssueDescription";
 
-const IssueComments = ({issue, onCommentSubmit}) =>{
+const IssueComments = ({issue, onCommentSubmit, onCommentEditSubmit}) =>{
 
     const {getUserName, getLastName, onCommentChange, comment, editingId, toggleEdit} = IssueCommentsLogic();
     
@@ -18,6 +18,7 @@ const IssueComments = ({issue, onCommentSubmit}) =>{
 	    {issue.comments.map(comment => <CommentCard key={comment.id}
                                                         comment={comment}
                                                         edit={comment.id === editingId}
+                                                        editSubmit={onCommentEditSubmit}
                                                         toggleEdit={toggleEdit}/>)}
 
 

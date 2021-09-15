@@ -14,6 +14,7 @@ const IssueDetails = () => {
 	onReturnToIssues,
 	detailsContent,
         onCommentSubmit,
+        onCommentEditSubmit,
     } = IssueDetailsLogic();
 
 
@@ -31,7 +32,7 @@ const IssueDetails = () => {
 	    <IssueHeader issue={issue} isClosed={isClosed}/>
 	    <hr/>
 	    <div className="d-flex flex-row">
-	      <IssueComments issue={issue} onCommentSubmit={onCommentSubmit}/>
+	      <IssueComments issue={issue} onCommentSubmit={onCommentSubmit} onCommentEditSubmit={onCommentEditSubmit}/>
 	      <DetailsPanel issue={issue} content={detailsContent()} />
 	    </div>
 	  </div>

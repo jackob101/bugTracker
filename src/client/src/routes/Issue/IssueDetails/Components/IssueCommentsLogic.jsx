@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const IssueCommentsLogic = () =>{
+const IssueCommentsLogic = ({setIssue}) =>{
 
     const [comment, setComment] = useState("");
     const [editingId, setEditingId] = useState(0);
@@ -24,6 +24,7 @@ const IssueCommentsLogic = () =>{
         else
             setEditingId(commentId);
     };
+
 
     return {onCommentChange, getUserName, getLastName, comment, editingId, toggleEdit};
 };

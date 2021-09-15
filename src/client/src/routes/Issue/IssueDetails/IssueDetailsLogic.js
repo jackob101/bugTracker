@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
@@ -12,12 +11,17 @@ const IssueDetailsLogic = () => {
     const { get, deleteRequest, post } = RequestUtils();
 
 
-    const userId = parseInt(localStorage.getItem("userId"));
     const [issue, setIssue] = useState({});
     const [users, setUsers] = useState([]);
     const [isClosed, setIsClosed] = useState(false);
     const [loading, setLoading] = useState(true);
-    const { getAccessTokenSilently } = useAuth0();
+
+    const getIssue = () => {
+	return get("/issue/" + id);
+    };
+    const getUsers = () => {
+	return get("/user/notAssigned", { issueId: id });
+    };
 
     useEffect(() => {
 	async function fetchData() {
@@ -31,16 +35,9 @@ const IssueDetailsLogic = () => {
 	    );
 	}
 	fetchData();
-    }, [getAccessTokenSilently, id]);
+    }, []);
 
-    const getIssue = () => {
-	return get("/issue/" + id);
-    };
-    const getUsers = () => {
-	return get("/user/notAssigned", { issueId: id });
-    };
-
-    const onDelete = async (issue) => {
+    const onIssueDelete = async (issue) => {
 	const projectId = issue.project.id;
 	await deleteRequest("/issue/delete", { id: issue.id });
 	history.push("/project/issues/" + projectId);
@@ -104,49 +101,8 @@ const IssueDetailsLogic = () => {
 
     }
 
-    const commentsColumns = React.useMemo(
-	() => [
-	    {
-		accessor: "index",
-		Headers: "#",
-		Cell :({row: {index} }) => index + 1,
-		disableSortBy: true,
-	    },
-	    {
-		accessor: "comment",
-		Header: "Comment",
-	    },
-	    {
-		accessor: "",
-		Header: "User",
-		Cell:  ({row: {original}}) =>{
-		    return original.userName + " " + original.userLastName;
-		}
-	    },
-	    {
-		accessor: "date",
-		Header: "Posted on",
-		Cell: ({row: {original}}) =>{
-		    return original.creationDate.split("T")[0]
-		}
-	    },
-	    {
-		accessor: "controls",
-		Headers: "Controls",
-		Cell:({row: {original}}) =>{
-		    if(original.userId === userId){
-			return <button className="btn btn-outline-secondary" onClick={() => onCommentDelete(original)}>Delete</button>
-		    }else{
-			return "";
-		    }
-		}
-	    }
-	], [onCommentDelete]
-    )
-
     const onCommentSubmit = (event, comment) =>{
 	event.preventDefault();
-	console.log("Submited")
 	if(comment.length > 5){
 	    const requestBody = {
 		comment,
@@ -225,17 +181,17 @@ const IssueDetailsLogic = () => {
     return {
 	issue,
 	loading,
-	onDelete,
+	onIssueDelete,
 	onToggleIssueClosedStatus,
 	onReturnToIssues,
 	isClosed,
 	users,
 	assignUser,
 	unassignUser,
-	commentsColumns,
 	onCommentSubmit,
 	onCommentDelete,
 	detailsContent,
+	setIssue,
     };
 };
 
