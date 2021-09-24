@@ -24,6 +24,16 @@ jobs:
           name: Test
           command: mvn -e test
 
+    deploy:
+      docker:
+        - image: circleci/buildpack-deps:trusty
+      steps:
+        - checkout
+        - run:
+            name: Deploy app on heroku
+            command: |
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
@@ -32,3 +42,6 @@ workflows:
   sample: 
     jobs:
       - build-and-test
+      - deploy:
+          requires:
+            - build-and-test
