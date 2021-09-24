@@ -288,12 +288,4 @@ class IssueServiceImplTest {
         assertEquals(Priority.IMPORTANT, update.getPriority());
         assertEquals(users.size(), update.getUsers().size());
     }
-
-    @Test
-    void testMethods(){
-		ExampleClass exampleClass = new ExampleClass();
-		exampleClass.setExampleName("THis is example name");
-		exampleClass.setExampleSecondName("This is example second name");
-		System.out.println(exampleClass);
-    }
 }
