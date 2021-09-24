@@ -1,6 +1,7 @@
 package com.trix.bugtracker.frontend.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import com.trix.bugtracker.DTO.CommentDTO;
 import com.trix.bugtracker.model.Comment.Comment;
@@ -42,5 +43,11 @@ public class CommentController{
 	return commentService.delete(id);
 	
     }
+
+    @PostMapping(value="/update")
+    public Comment update(@RequestBody Map<String, Object> body) {
+	return commentService.update(((Integer)body.get("commentId")).longValue(), (String)body.get("comment"));
+    }
+    
 
 }

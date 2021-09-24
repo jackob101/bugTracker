@@ -10,4 +10,6 @@ public interface CommentService extends CRUDService<Comment> {
     List<Comment> findByUser_id(Long userId);
 
     Comment save(CommentDTO commentDTO);
+
+    Comment update(Long commentId, String comment);
 }

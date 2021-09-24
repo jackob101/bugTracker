@@ -3,8 +3,10 @@ package com.trix.bugtracker.frontend.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trix.bugtracker.model.User.User;
 import com.trix.bugtracker.services.interfaces.UserService;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -95,20 +97,30 @@ class UserControllerTest {
     @Test
     void createAccount() throws Exception {
         //given
-        String json = new ObjectMapper().writeValueAsString(user);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sub","auth|test");
+        jsonObject.put("name","name1");
+        jsonObject.put("nickname","nickname1");
+        jsonObject.put("lastName","lastName1");
+        jsonObject.put("email","email@gmail.com");
+        jsonObject.put("emailVerified",true);
+        jsonObject.put("age",24);
+        System.out.println(jsonObject.toString());
+
+
 
         //when
-        when(userService.save(Mockito.any(User.class))).thenReturn(user);
+        when(userService.save(Mockito.any(User.class))).then(AdditionalAnswers.returnsFirstArg());
 
         //then
         mockMvc.perform(post(path + "/new")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json)
+                .content(jsonObject.toString())
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value(user.getName()));
+                .andExpect(jsonPath("$.name").value("name1"));
     }
 
 }

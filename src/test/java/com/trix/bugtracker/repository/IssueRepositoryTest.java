@@ -43,6 +43,7 @@ class IssueRepositoryTest {
                 .id(1L)
                 .name("Tomas")
                 .lastName("Samot")
+                .nickname("user1 nickname")
                 .age(25)
                 .email("toma@gmail.com")
                 .build();
@@ -50,6 +51,7 @@ class IssueRepositoryTest {
         User user2 = User.builder()
                 .id(2L)
                 .name("Andrew")
+                .nickname("user2 nickname")
                 .lastName("Werdna")
                 .age(35)
                 .email("and@gmail.com")
@@ -58,6 +60,7 @@ class IssueRepositoryTest {
         User user3 = User.builder()
                 .id(3L)
                 .name("Henry")
+                .nickname("user3 nickname")
                 .lastName("YrneH")
                 .age(19)
                 .email("hen@gmail.com")

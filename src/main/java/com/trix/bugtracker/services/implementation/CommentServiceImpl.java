@@ -95,4 +95,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 	return null;
     }
+
+
+    @Override
+    public Comment update(Long commentId, String comment) {
+	Comment commentById = this.findById(commentId);
+	commentById.setComment(comment);
+	return save(commentById);
+    }
 }
