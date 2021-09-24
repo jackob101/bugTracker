@@ -35,7 +35,7 @@ jobs:
       # Then run your tests!
       - run:
           name: Test
-          command: mvn test
+          command: mvn -e test
 
 workflows:
   # Below is the definition of your workflow.
