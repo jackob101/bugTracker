@@ -119,10 +119,4 @@ public class IssueController {
 	return issueService.changePriority(issueId, priority);
     }
 
-    @GetMapping(path = "test")
-    public String getTest(){
-        return "Yay CI/CD works!!!!";
-    }
-
-
 }
